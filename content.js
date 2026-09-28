@@ -17,49 +17,27 @@
   }
 
   function parse(text) {
-    const projectMatch = text.match(/(?:^|\n)\s*PROJECT\s*:\s*([^\n]+)/i);
-    let project = projectMatch ? cleanName(projectMatch[1]) : null;
+    const anzuba = text.match(/ANZUBA_PROJECT\\s*([\\s\\S]*?)ANZUBA_END/i);
+    const section = anzuba ? anzuba[0] : text;
+    const nameMatch = section.match(/(?:^|\\n)\\s*(?:NAME|PROJECT)\\s*:\\s*([^\\n]+)/i);
+    const projectMatch = section.match(/(?:^|\\n)\\s*PROJECT\\s*:\\s*([^\\n]+)/i);
     const files = [];
-
-    const protocol = new RegExp("(?:^|\\n)\\s*FILE\\s*:\\s*([^\\n]+)\\n\\s*" + FENCE + "[^\\n]*\\n([\\s\\S]*?)\\n\\s*" + FENCE, "gi");
+    const protocol = new RegExp("(?:^|\\\\n)\\\\s*FILE\\\\s*:\\\\s*([^\\\\n]+)\\\\n\\\\s*" + FENCE + "[^\\\\n]*\\\\n([\\s\\S]*?)\\\\n\\\\s*" + FENCE, "gi");
     let m;
-    while ((m = protocol.exec(text))) {
+    while ((m = protocol.exec(section))) {
       const p = pathName(m[1]);
       if (p) files.push({path:p, content:m[2]});
     }
-
-    const xml = /<(?:file|FILE)\s+(?:path|name)=["']([^"']+)["'][^>]*>([\s\S]*?)<\/(?:file|FILE)>/g;
-    while ((m = xml.exec(text))) {
+    const xml = /<(?:file|FILE)\\s+(?:path|name)=[\"']([^\"']+)[\"'][^>]*>([\\s\\S]*?)<\\\\/(?:file|FILE)>/g;
+    while ((m = xml.exec(section))) {
       const p = pathName(m[1]);
       if (p) files.push({path:p, content:m[2].trim()});
     }
-
-    const labeled = new RegExp("(?:^|\\n)\\s*(?:Arquivo|File)\\s*[:\\-]\\s*([^\\n]+)\\n\\s*" + FENCE + "[^\\n]*\\n([\\s\\S]*?)\\n\\s*" + FENCE, "gi");
-    while ((m = labeled.exec(text))) {
-      const p = pathName(m[1]);
-      if (p) files.push({path:p, content:m[2]});
-    }
-
-    if (!files.length) {
-      const parts = text.split(FENCE);
-      for (let i = 1; i < parts.length; i += 2) {
-        const before = parts[i - 1] || "";
-        const lines = before.trim().split(/\n/);
-        const candidate = (lines[lines.length - 1] || "").replace(/^[-*#>\s]+/, "").trim();
-        if (/^[\w./-]+\.(html?|css|js|jsx|ts|tsx|json|lua|py|cpp|h|hpp|cs|java|kt|rs|go|php|md|txt|xml|yml|yaml|bat|ps1|gd)$/i.test(candidate)) {
-          files.push({path:pathName(candidate), content:parts[i].replace(/^[^\n]*\n/,"").trimEnd()});
-        }
-      }
-    }
-
     const unique = new Map();
-    files.forEach(f => { if (f.path && !unique.has(f.path)) unique.set(f.path, f); });
-
-    if (!project) {
-      const title = text.match(/(?:^|\n)\s*#\s+([^\n]+)/);
-      const pkg = text.match(/["']name["']\s*:\s*["']([^"']+)["']/i);
-      project = cleanName(title ? title[1] : (pkg ? pkg[1] : "anzuba-project"));
-    }
+    files.forEach(f => { if (f.path) unique.set(f.path, f); });
+    if (!unique.size) return null;
+    if (anzuba && !/ANZUBA_END/i.test(section)) return null;
+    let project = cleanName(nameMatch ? nameMatch[1] : (projectMatch ? projectMatch[1] : "anzuba-project"));
     return {project, files:[...unique.values()]};
   }
 
