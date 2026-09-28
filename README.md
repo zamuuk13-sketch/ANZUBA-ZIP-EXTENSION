@@ -1,37 +1,21 @@
 # ANZUBA ZIP
 
-Extensão Chrome/Chromium Manifest V3 para transformar respostas de IAs em projetos reais dentro de um único ZIP.
+Extensão simples para Gemini e DeepSeek.
 
-## Recursos
-- Gemini, DeepSeek e ChatGPT.
-- Detecta o protocolo explícito FILE/PROJECT.
-- Detecta formatos comuns de blocos de código.
-- Botão **📁 Baixar projeto** dentro da resposta.
-- ZIP criado localmente, sem servidor externo.
-- Nome do ZIP definido pela IA com PROJECT.
+Fluxo: o usuário pede um projeto para a IA → a IA cria e organiza todos os arquivos e pastas → a IA entrega o projeto ao ANZUBA → aparece o botão 📁 Baixar projeto → o navegador baixa um único ZIP.
 
-## Formato recomendado
-PROJECT: meu-jogo
-DESCRIPTION: Jogo em HTML
-
-FILE: index.html
-```html
-<!doctype html>
-...
-```
-
-FILE: src/game.js
-```js
-...
-```
-
-RUN: abra index.html no navegador.
+A IA entrega o projeto usando ANZUBA_PROJECT, NAME, FILE e ANZUBA_END. A extensão não é uma IDE e não cria o projeto por conta própria: ela somente transforma a estrutura pronta da IA em ZIP.
 
 ## Instalação
-1. Chrome/Chromium → chrome://extensions
-2. Ative Modo do desenvolvedor.
-3. Carregar sem compactação.
-4. Selecione a pasta deste repositório.
 
-## Nota
-O navegador permite gerar e baixar o ZIP após o clique do usuário. A extensão não pode silenciosamente instalar/extrair arquivos arbitrários no computador sem as confirmações e APIs apropriadas do navegador/OS.
+1. Abra chrome://extensions.
+2. Ative Modo do desenvolvedor.
+3. Clique em Carregar sem compactação.
+4. Selecione a pasta do repositório.
+
+## Sites
+
+- Gemini
+- DeepSeek
+
+O ZIP é montado localmente no navegador, sem servidor ou API externa.
