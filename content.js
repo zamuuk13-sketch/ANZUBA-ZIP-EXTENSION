@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  if (!/gemini\.google\.com|deepseek\.com|chatgpt\.com|chat\.openai\.com/i.test(location.hostname)) return;
+  if (!/^(gemini\.google\.com|deepseek\.com|chat\.deepseek\.com|www\.deepseek\.com)$/i.test(location.hostname)) return;
 
   const FENCE = String.fromCharCode(96).repeat(3);
   const seen = new WeakSet();
