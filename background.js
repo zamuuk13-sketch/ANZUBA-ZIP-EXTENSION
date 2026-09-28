@@ -1,1 +1,1 @@
-chrome.runtime.onInstalled.addListener(()=>chrome.storage.local.set({anzubaEnabled:true}));
+chrome.runtime.onInstalled.addListener(() => {});
