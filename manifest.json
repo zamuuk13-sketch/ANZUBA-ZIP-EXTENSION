@@ -1,13 +1,15 @@
 {
   "manifest_version": 3,
   "name": "ANZUBA ZIP",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Ponte entre Gemini/DeepSeek e projetos em ZIP.",
-  "permissions": [],
+  "permissions": [
+    "scripting"
+  ],
   "host_permissions": [
     "https://gemini.google.com/*",
     "https://deepseek.com/*",
-    "https://chat.deepseek.com/*"
+    "https://*.deepseek.com/*"
   ],
   "action": {
     "default_title": "ANZUBA ZIP",
@@ -18,7 +20,7 @@
       "matches": [
         "https://gemini.google.com/*",
         "https://deepseek.com/*",
-        "https://chat.deepseek.com/*"
+        "https://*.deepseek.com/*"
       ],
       "js": [
         "content.js"
