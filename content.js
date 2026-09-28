@@ -7,7 +7,7 @@ var F=String.fromCharCode(96).repeat(3);
 var filesByPath={};
 var projectName="anzuba-project";
 var panel=null;
-var timer=0;
+var timer=0;var finishTimer=0;
 
 function safeName(v){
  v=String(v||"anzuba-project").replace(/[^a-zA-Z0-9À-ÿ._ -]/g,"-").replace(/\s+/g,"-");
@@ -95,7 +95,7 @@ function createPanel(){
  panel.innerHTML='<div class="anzuba-status-title">ANZUBA</div><div class="anzuba-status-text">Conectado ao site da IA</div>';
  document.body.appendChild(panel);
 }
-function showDownload(){
+function showLoading(){createPanel();var b=panel.querySelector(".anzuba-download");if(b)b.remove();var i=panel.querySelector(".anzuba-info");if(i)i.remove();if(!panel.querySelector(".anzuba-loading")){var l=document.createElement("div");l.className="anzuba-loading";l.innerHTML="<span></span><span></span><span></span>";panel.appendChild(l);}}\nfunction scheduleFinish(){if(!Object.keys(filesByPath).length)return;showLoading();clearTimeout(finishTimer);finishTimer=setTimeout(function(){showDownload();},2200);}\nfunction showDownload(){
  createPanel();
  var old=panel.querySelector(".anzuba-download");
  if(old)old.remove();
