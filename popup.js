@@ -1,21 +1,3 @@
-const FENCE=String.fromCharCode(96).repeat(3);
-const prompt=[
-"Você tem o ANZUBA ZIP disponível nesta conversa.",
-"Quando eu pedir um projeto, crie o projeto completo e organize todos os arquivos e pastas.",
-"Quando terminar, entregue o projeto ao ANZUBA exatamente assim:",
-"ANZUBA_PROJECT",
-"NAME: nome-do-projeto",
-"FILE: caminho/arquivo.ext",
-FENCE+"linguagem",
-"conteúdo COMPLETO do arquivo",
-FENCE,
-"Repita FILE + bloco de código para todos os arquivos.",
-"ANZUBA_END",
-"Não omita arquivos e não substitua código por reticências."
-].join("\n");
-document.getElementById("copyPrompt").addEventListener("click",async()=>{
-  await navigator.clipboard.writeText(prompt);
-  const b=document.getElementById("copyPrompt");
-  b.textContent="Copiado ✓";
-  setTimeout(()=>b.textContent="Copiar instrução do ANZUBA",1600);
-});
+const F=String.fromCharCode(96).repeat(3);
+const prompt=["Você tem o ANZUBA ZIP disponível nesta conversa.","Quando eu pedir um projeto, crie o projeto completo, com todos os arquivos e pastas necessários.","Não entregue exemplos incompletos: mostre o conteúdo COMPLETO de cada arquivo.","Quando terminar, faça o handoff oficial para o ANZUBA:","ANZUBA_PROJECT","NAME: nome-do-projeto","FILE: caminho/arquivo.ext",F+"linguagem","conteúdo COMPLETO do arquivo",F,"Repita FILE + bloco de código para TODOS os arquivos.","ANZUBA_END","Se não usar o protocolo, deixe o nome/caminho de cada arquivo claramente visível antes de cada bloco de código. O ANZUBA também tenta reconhecer esse formato automaticamente.","Não use reticências para substituir código e não omita arquivos."].join("\n");
+document.getElementById("copyPrompt").onclick=async()=>{await navigator.clipboard.writeText(prompt);const b=document.getElementById("copyPrompt");b.textContent="Copiado ✓";setTimeout(()=>b.textContent="Copiar instrução do ANZUBA",1600)};
