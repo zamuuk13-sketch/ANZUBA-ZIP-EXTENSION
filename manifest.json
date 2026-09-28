@@ -1,12 +1,11 @@
 {
   "manifest_version": 3,
   "name": "ANZUBA ZIP",
-  "version": "1.0.0",
-  "description": "Transforma respostas de IAs em projetos organizados e baixáveis como um único ZIP.",
-  "permissions": ["downloads", "storage"],
-  "host_permissions": ["https://gemini.google.com/*","https://deepseek.com/*","https://chat.deepseek.com/*","https://chatgpt.com/*","https://chat.openai.com/*"],
+  "version": "2.0.0",
+  "description": "Permite que Gemini e DeepSeek entreguem projetos completos em um único ZIP.",
+  "permissions": [],
+  "host_permissions": ["https://gemini.google.com/*","https://deepseek.com/*","https://chat.deepseek.com/*"],
   "action": {"default_title":"ANZUBA ZIP","default_popup":"popup.html"},
-  "background": {"service_worker":"background.js"},
-  "content_scripts": [{"matches":["https://gemini.google.com/*","https://deepseek.com/*","https://chat.deepseek.com/*","https://chatgpt.com/*","https://chat.openai.com/*"],"js":["content.js"],"css":["content.css"],"run_at":"document_idle"}],
+  "content_scripts": [{"matches":["https://gemini.google.com/*","https://deepseek.com/*","https://chat.deepseek.com/*"],"js":["content.js"],"css":["content.css"],"run_at":"document_idle"}],
   "icons": {"16":"icons/folder.svg","32":"icons/folder.svg","48":"icons/folder.svg","128":"icons/folder.svg"}
 }
